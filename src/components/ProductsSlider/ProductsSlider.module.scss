@@ -1,0 +1,76 @@
+@use '../../styles/variables' as *;
+@use '../../styles/mixins' as *;
+
+.top {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0 16px 24px 0;
+
+  @include on-tablet {
+    margin: 0 24px 24px 0;
+  }
+
+  @include on-desktop {
+    margin: 24px 0;
+
+  }
+}
+
+.title {
+  font-weight: 800;
+  font-size: 22px;
+  max-width: 140px;
+
+  @include on-tablet {
+    font-size: 32px;
+    line-height: 41px;
+    max-width: none;
+    margin: 0;
+  }
+}
+
+.buttons {
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
+}
+
+.button {
+  display: flex;
+  align-items: center;
+  width: 32px;
+  height: 32px;
+  background-color: transparent;
+  border: 1px solid $grey-color;
+  cursor: pointer;
+  color: $icons-color;
+  transition: color .3s;
+
+  &:hover {
+    color: $primary-color;
+  }
+}
+
+.sliderWindow {
+  overflow: hidden;
+}
+
+.cards {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+.cardWrapper {
+  flex: 0 0 212px;
+
+  @include on-tablet {
+    flex-basis: 237px;
+  }
+
+  @include on-desktop {
+    flex-basis: 272px;
+  }
+}
