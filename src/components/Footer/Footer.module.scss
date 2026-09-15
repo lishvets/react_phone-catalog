@@ -55,7 +55,7 @@
   transition: color .3s;
 
   &:hover {
-    color: $primary-color;
+    color: var(--primary-color);
   }
 }
 
@@ -72,7 +72,7 @@
   padding: 0;
 
   &:hover {
-    color: $primary-color;
+    color: var(--primary-color);
   }
 
   @include on-tablet {
@@ -90,6 +90,6 @@
   transition: border-color 0.3s;
 
   &:hover {
-    border-color: $primary-color;
+    border-color: var(--primary-color);
   }
 }

@@ -5,9 +5,14 @@ import { CartContext } from '../context/CartContext';
 import { ThemeContext } from '../context/ThemeContext';
 import styles from './Header.module.scss';
 import logo from '../../assets/icons/logo-dark.svg';
+import logoWhite from '../../assets/icons/logo-white.svg';
 import menu from '../../assets/icons/menu.svg';
+import menuWhite from '../../assets/icons/menu-white.svg';
 import heart from '../../assets/icons/heart.svg';
+import heartWhite from '../../assets/icons/heart-white.svg';
 import cart from '../../assets/icons/cart.svg';
+import cartWhite from '../../assets/icons/cart-white.svg';
+import { useLanguage } from '../context/LanguageContext';
 
 export const Header = () => {
   const context = useContext(FavouritesContext);
@@ -71,11 +76,12 @@ export const Header = () => {
   }
 
   const { theme, toggleTheme } = themeContext;
+  const { language, setLanguage, t } = useLanguage();
 
   return (
     <header className={styles.header}>
       <NavLink to="/" className={styles.logo}>
-        <img src={logo} alt="Nice Gadgets" />
+        <img src={theme === 'dark' ? logoWhite : logo} alt="Nice Gadgets" />
       </NavLink>
 
       <nav className={styles.nav}>
@@ -86,7 +92,7 @@ export const Header = () => {
             `${styles.link} ${isActive ? styles.active : ''}`
           }
         >
-          Home
+          {t('home')}
         </NavLink>
         <NavLink
           to="/phones"
@@ -94,7 +100,7 @@ export const Header = () => {
             `${styles.link} ${isActive ? styles.active : ''}`
           }
         >
-          Phones
+          {t('phones')}
         </NavLink>
         <NavLink
           to="/tablets"
@@ -102,7 +108,7 @@ export const Header = () => {
             `${styles.link} ${isActive ? styles.active : ''}`
           }
         >
-          Tablets
+          {t('tablets')}
         </NavLink>
         <NavLink
           to="/accessories"
@@ -110,38 +116,71 @@ export const Header = () => {
             `${styles.link} ${isActive ? styles.active : ''}`
           }
         >
-          Accessories
+          {t('accessories')}
         </NavLink>
       </nav>
       {isCatalogPage && (
-        <input
-          className={styles.search}
-          type="search"
-          value={searchValue}
-          placeholder="Search..."
-          onChange={event => {
-            setSearchValue(event.target.value);
-          }}
-        />
+        <div className={styles.searchContainer}>
+          <input
+            className={styles.search}
+            type="search"
+            value={searchValue}
+            placeholder={t('search')}
+            onChange={event => {
+              setSearchValue(event.target.value);
+            }}
+          />
+        </div>
       )}
       <div className={styles.allButtons}>
-        <button
-          type="button"
-          className={styles.themeButton}
-          onClick={toggleTheme}
-          aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} theme`}
-        >
-          {theme === 'light' ? '🌙' : '☀️'}
-        </button>
+        {!isCatalogPage && (
+          <div className={styles.languageThemeButtons}>
+            <div className={styles.languageSwitcher}>
+              <button
+                type="button"
+                className={`${styles.languageButton} ${language === 'en' ? styles.selected : ''}`}
+                onClick={() => setLanguage('en')}
+              >
+                EN
+              </button>
+
+              <button
+                type="button"
+                className={`${styles.languageButton} ${language === 'ua' ? styles.selected : ''}`}
+                onClick={() => setLanguage('ua')}
+              >
+                UA
+              </button>
+            </div>
+
+            <button
+              type="button"
+              className={`${styles.themeSwitcher} ${theme === 'dark' ? styles.dark : ''}`}
+              onClick={toggleTheme}
+              aria-label={
+                theme === 'light'
+                  ? t('switchToDarkTheme')
+                  : t('switchToLightTheme')
+              }
+            >
+              <span className={styles.themeCircle} />
+            </button>
+          </div>
+        )}
+
         <div className={styles.actions}>
           <NavLink
-            to="/favourites"
+            to="/favorites"
             className={({ isActive }) =>
               `${styles.icon} ${isActive ? styles.active : ''}`
             }
           >
             <span className={styles.sectionIcon}>
-              <img src={heart} alt="Favourites" className={styles.iconImage} />
+              <img
+                src={theme === 'dark' ? heartWhite : heart}
+                alt="Favourites"
+                className={styles.iconImage}
+              />
               {favourites.length > 0 && (
                 <span className={styles.counter}>{favourites.length}</span>
               )}
@@ -154,7 +193,11 @@ export const Header = () => {
             }
           >
             <span className={styles.sectionIcon}>
-              <img src={cart} alt="Cart" className={styles.iconImage} />
+              <img
+                src={theme === 'dark' ? cartWhite : cart}
+                alt="Cart"
+                className={styles.iconImage}
+              />
               {totalCartItems > 0 && (
                 <span className={styles.counter}>{totalCartItems}</span>
               )}
@@ -164,7 +207,11 @@ export const Header = () => {
       </div>
 
       <NavLink to="/menu" className={styles.menuButton}>
-        <img src={menu} alt="Open menu" className={styles.menuIcon} />
+        <img
+          src={theme === 'dark' ? menuWhite : menu}
+          alt="Open menu"
+          className={styles.menuIcon}
+        />
       </NavLink>
     </header>
   );

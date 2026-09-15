@@ -15,13 +15,18 @@
   @include on-desktop {
     padding: 40px 32px;
   }
+
+   @include on-design {
+    padding: 40px 152px;
+    max-width: 1000px;
+  }
 }
 
 .title {
   font-weight: 700;
   font-size: 20px;
   margin: 0;
-  color: $primary-color;
+  color: var(--primary-color);
 }
 
 .paragraph {
@@ -29,5 +34,5 @@
   font-weight: 600;
   font-size: 14px;
   line-height: 21px;
-  color: $secondary-color;
+  color: var(--secondary-color);
 }

@@ -3,7 +3,7 @@ import { CatalogPage } from '../../components/CatalogPage/CatalogPage';
 export const TabletsPage = () => {
   return (
     <>
-      <CatalogPage title="Tablets" category="tablets" />
+      <CatalogPage title="tabletsPage" category="tablets" />
     </>
   );
 };

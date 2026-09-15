@@ -12,8 +12,8 @@
   height: 48px;
   padding-left: 16px;
 
-  border-bottom: 1px solid $grey-color;
-  background-color: $white-color;
+  border-bottom: 1px solid var(--elements-color);
+  background-color: var(--background-color);
 
   @include on-desktop {
     padding: 18px 0 24px 18px;
@@ -51,12 +51,11 @@
   display: flex;
   justify-content: center;
   align-items: center;
-
-  border-left: 1px solid $grey-color;
+  border-left: 1px solid var(--elements-color);
   transition: background-color 0.3s ease;
 
   &:hover {
-    background-color: $grey-color;
+    background-color: var(--hover-color);
 
     .menuIcon {
       transform: scale(1.1);
@@ -73,7 +72,7 @@
 
   @include on-tablet {
     display: flex;
-    gap: 25px;
+    gap: 20px;
     margin-left: 24px;
   }
 
@@ -90,7 +89,7 @@
   line-height: 11px;
   text-transform: uppercase;
   text-decoration: none;
-  color: $secondary-color;
+  color: var(--secondary-color);
   transition: color 0.3s;
 
    &::after {
@@ -101,7 +100,7 @@
       display: block;
       width: 100%;
       height: 3px;
-      background-color: $primary-color;
+      background-color: var(--primary-color);
 
       opacity: 0;
       transition: opacity 0.3s;
@@ -112,7 +111,7 @@
     }
 
   &:hover {
-    color: $primary-color;
+    color: var(--primary-color);
   }
 
   &:hover::after {
@@ -120,7 +119,7 @@
   }
 
   &.active {
-    color: $primary-color;
+    color: var(--primary-color);
 
     &::after {
       opacity: 1;
@@ -149,7 +148,7 @@
   width: 48px;
   height: 48px;
   cursor: pointer;
-  border-left: 1px solid $grey-color;
+  border-left: 1px solid var(--elements-color);
   transition: background-color 0.3s ease;
 
   &:hover {
@@ -168,7 +167,7 @@
     width: 100%;
     height: 3px;
 
-    background-color: $primary-color;
+   background-color: var(--primary-color);
 
     transform: scaleX(0);
     transition: transform 0.3s;
@@ -216,35 +215,35 @@
   background-color: $red-color;
 }
 
+.searchContainer {
+  margin-inline: 5px;
+}
+
 .search {
   margin-left: 20px;
-  min-width: 100px;
-  height: 48px;
-
-  padding: 0 16px;
-
-  border: none;
-  border-left: 1px solid $grey-color;
-
+  width: 120px;
+  height: 32px;
+  border-radius: 48px;
+  border: 2px solid var(--secondary-color);
+  font-family: inherit;
+  font-size: 10px;
+  font-weight: 400;
+  padding: 5px 16px;
+  color: var(--primary-color);
   outline: none;
 
-  font-family: inherit;
-  font-size: 14px;
-  font-weight: 600;
-
-  color: $primary-color;
   background-color: transparent;
   transition:
     background-color 0.3s ease,
     box-shadow 0.3s ease;
 
   &:focus {
-    background-color: $grey-color;
-    box-shadow: inset 0 -3px 0 $primary-color;
+   background-color: var(--hover-color);
+    box-shadow: inset 0 -3px 0 var(--primary-color);
   }
 
   &::placeholder {
-    color: $secondary-color;
+     color: var(--secondary-color);
   }
 
   @include on-tablet {
@@ -252,8 +251,8 @@
   }
 
   @include on-desktop {
-    height: 69px;
-    width: 180px;
+    height: 40px;
+    width: 200px;
   }
 }
 
@@ -264,53 +263,90 @@
   margin-left: auto;
 }
 
-.themeButton {
-  position: relative;
+.languageThemeButtons {
   display: flex;
   align-items: center;
-  justify-content: center;
+  gap: 10px;
+  padding-right: 10px;
+}
 
-  width: 48px;
-  height: 48px;
+.languageSwitcher {
+  display: flex;
+  align-items: center;
+  gap:10px;
+  border: 2px solid var(--secondary-color);
+  border-radius: 999px;
 
-  border: none;
-
-  border-left: 1px solid $grey-color;
-  cursor: pointer;
-
-  background-color: transparent;
-  color: var(--primary-color);
-
-  &:hover {
-    background-color: var(--hover-color);
-  }
-
-   &::after {
-    content: '';
-    position: absolute;
-
-    bottom: 0;
-    left: 0;
-
-    width: 100%;
-    height: 3px;
-
-    background-color: $primary-color;
-
-    transform: scaleX(0);
-    transition: transform 0.3s;
-  }
-
-   &:hover::after {
-    transform: scaleX(1);
-  }
-
-  &.active::after {
-    transform: scaleX(1);
+  @include on-tablet {
+    gap: 5px;
   }
 
   @include on-desktop {
-    width: 64px;
-    height: 68px;
+    gap: 10px;
   }
+}
+
+.languageButton {
+  min-width: 30px;
+  height: 30px;
+  padding: 0 10px;
+  border: 0;
+  border-radius: 999px;
+  background-color: transparent;
+  color: var(--secondary-color);
+  font: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
+
+    @include on-tablet {
+      font-size: 12px;
+      font-weight: 600;
+       padding: 0 5px;
+    }
+
+    @include on-desktop {
+      font-size: 14px;
+      font-weight: 700;
+       padding: 0 10px;
+    }
+}
+
+.languageButton.selected {
+  background-color: var(--primary-color);
+  color: var(--secondary-color);
+}
+
+.themeSwitcher {
+  display: flex;
+  align-items: center;
+  min-width: 40px;
+  height: 30px;
+  padding: 2px;
+  border: 2px solid var(--icons-color);
+  border-radius: 999px;
+  background-color: var(--background-color);
+  cursor: pointer;
+  transition:
+    background-color 0.3s ease,
+    border-color 0.3s ease;
+}
+
+.themeCircle {
+  display: block;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background-color: var(--secondary-color);
+  transition:
+    transform 0.3s ease,
+    background-color 0.3s ease;
+}
+
+.themeSwitcher.dark .themeCircle {
+  transform: translateX(20px);
+  background-color: var(--primary-color);
 }

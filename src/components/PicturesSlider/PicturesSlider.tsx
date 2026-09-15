@@ -8,30 +8,41 @@ import slide2 from '../../assets/images/slider2.png';
 import slide3 from '../../assets/images/slider3.png';
 import classNames from 'classnames';
 import { NavLink } from 'react-router-dom';
+import { useLanguage } from '../context/LanguageContext';
+import { translations } from '../../translations/translations';
 
-const slides = [
+type Slide = {
+  mobile: string;
+  tablet: string;
+  title: keyof typeof translations.en;
+  subtitle: keyof typeof translations.en;
+  buttonText: keyof typeof translations.en;
+  link: string;
+};
+
+const slides: Slide[] = [
   {
     mobile: slide,
     tablet: slide1,
-    title: 'Now available in our store!',
-    subtitle: 'Be the first!',
-    buttonText: 'ORDER NOW',
+    title: 'NowAvailableInOurStore',
+    subtitle: 'BeTheFirst',
+    buttonText: 'OrderNow',
     link: '/phones',
   },
   {
     mobile: slide2,
     tablet: slide2,
-    title: 'Discover new technology',
-    subtitle: 'Explore our latest tablets',
-    buttonText: 'ORDER NOW',
+    title: 'DiscoverNewTechnology',
+    subtitle: 'ExploreOurLatestTablets',
+    buttonText: 'OrderNow',
     link: '/tablets',
   },
   {
     mobile: slide3,
     tablet: slide3,
-    title: 'Everything you need!',
-    subtitle: 'Find the best accessories',
-    buttonText: 'ORDER NOW',
+    title: 'EverythingYouNeed',
+    subtitle: 'FindTheBestAccessories',
+    buttonText: 'OrderNow',
     link: '/accessories',
   },
 ];
@@ -67,9 +78,11 @@ export const PicturesSlider = () => {
     return () => clearInterval(interval);
   }, [currentSlide]);
 
+  const { t } = useLanguage();
+
   return (
     <section className={styles.slider}>
-      <h2 className={styles.title}>Welcome to Nice Gadgets store!</h2>
+      <h2 className={styles.title}>{t('WelcometoNiceGadgetsstore')}</h2>
 
       <div className={styles.banner}>
         <button
@@ -83,17 +96,17 @@ export const PicturesSlider = () => {
           <div className={styles.slide}>
             <div className={styles.slideContent}>
               <h2 className={styles.slideTitle}>
-                {slides[currentSlide].title}
+                {t(slides[currentSlide].title)}
                 <span className={styles.emoji}> 👌</span>
               </h2>
               <p className={styles.slidesSubtitle}>
-                {slides[currentSlide].subtitle}
+                {t(slides[currentSlide].subtitle)}
               </p>
               <NavLink
                 to={slides[currentSlide].link}
                 className={styles.slideButton}
               >
-                {slides[currentSlide].buttonText}
+                {t(slides[currentSlide].buttonText)}
               </NavLink>
             </div>
             <div className={styles.slideImageWrapper}>

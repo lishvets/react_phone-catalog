@@ -13,7 +13,7 @@
   }
 
   @include on-design {
-    padding: 0 152px;
+    padding: 40px 152px;
   }
 }
 
@@ -72,5 +72,48 @@
 
   @include on-desktop {
     grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.emptyFavorite {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 60px 20px;
+  text-align: center;
+}
+
+.emptyImage {
+  width: 180px;
+  height: 180px;
+  object-fit: contain;
+  margin-bottom: 24px;
+
+  @include on-tablet {
+    width: 100%;
+  }
+}
+
+.emptyText {
+  margin: 0 0 24px;
+  color: var(--secondary-color);
+  font-size: 16px;
+}
+
+.startShopping {
+  min-width: 180px;
+  height: 48px;
+  border: none;
+  background-color: var(--primary-color);
+  color: var(--background-color);
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+
+  transition: opacity 0.3s ease;
+
+  &:hover {
+    opacity: 0.8;
   }
 }

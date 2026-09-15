@@ -1,7 +1,9 @@
+import { Category } from './CategoryNames';
+
 export type ProductDetails = {
   id: string;
   namespaceId: string;
-  category: string;
+  category: Category;
   name: string;
   capacityAvailable: string[];
   capacity: string;

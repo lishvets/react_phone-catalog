@@ -1,17 +1,17 @@
 import styles from './RightsPage.module.scss';
+import { useLanguage } from '../../components/context/LanguageContext';
 
 export const RightsPage = () => {
+  const { t } = useLanguage();
+
   return (
     <div className={styles.rights}>
-      <h2 className={styles.title}>Copyright & Legal</h2>
-      <p className={styles.paragraph}>Copyright © 2026 Lidiia Shvets.</p>
+      <h2 className={styles.title}>{t('copyright&Legal')}</h2>
       <p className={styles.paragraph}>
-        This project was created for educational purposes.
+        {t('Copyright')} © 2026 {t('LidiiaShvets')}.
       </p>
-      <p className={styles.paragraph}>
-        All product names, logos and trademarks are the property of their
-        respective owners.
-      </p>
+      <p className={styles.paragraph}>{t('ThisProject')}.</p>
+      <p className={styles.paragraph}>{t('AllProducts')}.</p>
     </div>
   );
 };

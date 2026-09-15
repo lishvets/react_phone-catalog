@@ -180,12 +180,11 @@
   font-size: 8px;
   line-height: 10px;
 
-
   color: $white-color;
 
   @include on-desktop {
     font-size: 14px;
-    margin: 16px 0 120px;
+    margin: 16px 0 100;
     padding-left: 32px;
   }
 }

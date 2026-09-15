@@ -7,15 +7,17 @@ import { ProductCard } from '../../components/ProductCard/ProductCard';
 import { useEffect, useState } from 'react';
 import { Product } from '../../types/Product';
 import { getProducts } from '../../api/api';
-import { CategoryNames } from '../../types/CategoryNames';
+import { Category } from '../../types/CategoryNames';
 import { ProductFilters } from '../ProductFilters/ProductFilters';
 import { Loader } from '../Loader';
 import { emptyMessages } from '../../utils/emptyMessages';
 import { searchMessages } from '../../utils/searchMessages';
+import { useLanguage } from '../context/LanguageContext';
+import { translations } from '../../translations/translations';
 
 type Props = {
-  title: string;
-  category: 'phones' | 'tablets' | 'accessories';
+  title: keyof typeof translations.en;
+  category: Category;
 };
 
 export const CatalogPage: React.FC<Props> = ({ title, category }) => {
@@ -27,6 +29,8 @@ export const CatalogPage: React.FC<Props> = ({ title, category }) => {
   const perPage = searchParams.get('perPage') || 'all';
   const page = Number(searchParams.get('page')) || 1;
   const query = searchParams.get('query') || '';
+
+  const { t } = useLanguage();
 
   const loadProducts = () => {
     setIsLoading(true);
@@ -169,11 +173,13 @@ export const CatalogPage: React.FC<Props> = ({ title, category }) => {
           <img src={home} alt="Home" />
         </NavLink>
         <img src={arrowRight} alt="" className={styles.arrow} />
-        <span className={styles.current}>{CategoryNames[category]}</span>
+        <span className={styles.current}>{t(category)}</span>
       </div>
       <div className={styles.pageInfo}>
-        <h1 className={styles.title}>{title}</h1>
-        <p className={styles.count}>{categoryProducts.length} models</p>
+        <h1 className={styles.title}>{t(title)}</h1>
+        <p className={styles.count}>
+          {categoryProducts.length} {t('models')}
+        </p>
       </div>
 
       <ProductFilters

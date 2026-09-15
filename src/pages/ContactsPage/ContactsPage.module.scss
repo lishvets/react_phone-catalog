@@ -14,6 +14,10 @@
   @include on-desktop {
     padding: 40px 32px;
   }
+
+  @include on-design {
+    padding: 40px 152px;
+  }
 }
 
 .title {
@@ -34,8 +38,15 @@
   }
 }
 
+.value {
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 21px;
+  color: var(--secondary-color);
+}
+
 .link {
-  color: $primary-color;
+  color: var(--secondary-color);
   text-decoration: none;
 
   &:hover {

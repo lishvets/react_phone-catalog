@@ -1,12 +1,15 @@
 import { useState, useEffect } from 'react';
 import arrowLeft from '../../assets/icons/arrow-left.svg';
+import arrowLeftWhite from '../../assets/icons/arrow-left-white.svg';
 import arrowRight from '../../assets/icons/arrow-right.svg';
+import arrowRightWhite from '../../assets/icons/arrow-right-white.svg';
 import { ProductCard } from '../ProductCard/ProductCard';
 import styles from './ProductsSlider.module.scss';
 import { CARD_GAP, CARD_WIDTH } from '../../utils/constants';
 import { Product } from '../../types/Product';
 import { getProducts, getSuggestedProducts } from '../../api/api';
 import { sortByNewest, sortByDiscount } from '../../utils/productHelpers';
+import { useTheme } from '../context/ThemeContext';
 
 type Props = {
   title: string;
@@ -86,16 +89,24 @@ export const ProductsSlider: React.FC<Props> = ({ title, type, productId }) => {
     visibleProducts = sortByDiscount(products);
   }
 
+  const { theme } = useTheme();
+
   return (
     <section className={styles.products}>
       <div className={styles.top}>
         <h2 className={styles.title}>{title}</h2>
         <div className={styles.buttons}>
           <button className={styles.button} onClick={handlePrevClick}>
-            <img src={arrowLeft} alt="Previous" />
+            <img
+              src={theme === 'dark' ? arrowLeftWhite : arrowLeft}
+              alt="Previous"
+            />
           </button>
           <button className={styles.button} onClick={handleNextClick}>
-            <img src={arrowRight} alt="Next" />
+            <img
+              src={theme === 'dark' ? arrowRightWhite : arrowRight}
+              alt="Next"
+            />
           </button>
         </div>
       </div>

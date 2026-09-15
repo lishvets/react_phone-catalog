@@ -6,6 +6,8 @@ import { CategoryCard } from '../CategoryCard/CategoryCard';
 import { useEffect, useState } from 'react';
 import { Product } from '../../types/Product';
 import { getProducts } from '../../api/api';
+import { useLanguage } from '../context/LanguageContext';
+import { translations } from '../../translations/translations';
 
 export const ShopByCategory = () => {
   const [products, setProducts] = useState<Product[]>([]);
@@ -18,9 +20,16 @@ export const ShopByCategory = () => {
     return products.filter(product => product.category === category).length;
   };
 
-  const categories = [
+  type Category = {
+    title: keyof typeof translations.en;
+    image: string;
+    models: number;
+    link: string;
+  };
+
+  const categories: Category[] = [
     {
-      title: 'Mobile phones',
+      title: 'MobilePhones',
       image: phones,
       models: getModelsCount('phones'),
       link: '/phones',
@@ -39,9 +48,11 @@ export const ShopByCategory = () => {
     },
   ];
 
+  const { t } = useLanguage();
+
   return (
     <section className={styles.shopByCategory}>
-      <h2 className={styles.title}>Shop by category</h2>
+      <h2 className={styles.title}>{t('ShopByCategory')}</h2>
       <div className={styles.cards}>
         {categories.map(category => (
           <CategoryCard

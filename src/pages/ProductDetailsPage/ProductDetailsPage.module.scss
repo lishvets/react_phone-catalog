@@ -38,7 +38,7 @@
 }
 
 .category {
-  color:$primary-color;
+  color: var(--primary-color);
   text-decoration: none;
   font-weight: 600;
   font-size: 12px;
@@ -322,7 +322,7 @@
   font-size: 14px;
   line-height: 21px;
 
-  color: $primary-color;
+  color: var(--primary-color);
 
   transition:
     background-color 0.3s,
@@ -330,21 +330,21 @@
     border-color 0.3s;
 
   &:hover {
-    border-color: $primary-color;
+    border-color: var(--primary-color);
   }
 }
 
 .capacityLabel:has(.radioInput:checked) {
   .capacityLink {
-    background-color: $primary-color;
-    color: $white-color;
-    border-color: $primary-color;
+    background-color: var(--primary-color);
+    color: var(--background-color);
+    border-color: var(--primary-color);
   }
 }
 
 .capacityLabel:has(.radioInput:focus-visible) {
   .capacityLink {
-    outline: 2px solid $primary-color;
+    outline: 2px solid var(--primary-color);
     outline-offset: 2px;
   }
 }
@@ -458,7 +458,7 @@
 }
 
 .label {
-  color: $secondary-color;
+  color: var(--secondary-color);
   margin: 0;
 
   @include on-tablet {
@@ -467,7 +467,7 @@
 }
 
 .value {
-  color: $primary-color;
+  color: var(--primary-color);
   margin: 0;
   text-align: right;
   font-weight: 600;
@@ -549,9 +549,16 @@
 
 .newModels {
   margin: 0;
+   padding: 0 0 56px 16px;
+
+
+  @include on-tablet {
+    padding: 0 0 64px 24px;
+  }
 
   @include on-desktop {
     grid-column: 1/-1;
+    padding: 0 0 81px 32px;
   }
 }
 
@@ -571,4 +578,8 @@
 
   border: 0;
   padding: 0;
+}
+
+.text {
+  color: var(--primary-color);
 }

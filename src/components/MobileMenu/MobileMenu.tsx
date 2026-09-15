@@ -1,14 +1,20 @@
 import { NavLink, useNavigate } from 'react-router-dom';
 import logo from '../../assets/icons/logo-dark.svg';
+import logoWhite from '../../assets/icons/logo-white.svg';
 import close from '../../assets/icons/close.svg';
+import closeWhite from '../../assets/icons/close-white.svg';
 import heart from '../../assets/icons/heart.svg';
+import heartWhite from '../../assets/icons/heart-white.svg';
 import cart from '../../assets/icons/cart.svg';
+import cartWhite from '../../assets/icons/cart-white.svg';
 
 import styles from './MobileMenu.module.scss';
 
 import { useContext } from 'react';
-import { FavouritesContext } from '../../components/context/FavouritesContext';
+import { FavouritesContext } from '../context/FavouritesContext';
 import { CartContext } from '../context/CartContext';
+import { useTheme } from '../context/ThemeContext';
+import { useLanguage } from '../context/LanguageContext';
 
 export const MobileMenu = () => {
   const context = useContext(FavouritesContext);
@@ -30,18 +36,21 @@ export const MobileMenu = () => {
     0,
   );
 
+  const { theme, toggleTheme } = useTheme();
+  const { language, setLanguage, t } = useLanguage();
+
   return (
     <aside className={styles.menu}>
       <header className={styles.top}>
         <NavLink to="/" className={styles.logo}>
-          <img src={logo} alt="Nice Gadgets" />
+          <img src={theme === 'dark' ? logoWhite : logo} alt="Nice Gadgets" />
         </NavLink>
         <button
           type="button"
           className={styles.closeButton}
           onClick={() => navigate(-1)}
         >
-          <img src={close} alt="Close menu" />
+          <img src={theme === 'dark' ? closeWhite : close} alt="Close menu" />
         </button>
       </header>
       <nav className={styles.nav}>
@@ -52,7 +61,7 @@ export const MobileMenu = () => {
             `${styles.link} ${isActive ? styles.active : ''}`
           }
         >
-          Home
+          {t('home')}
         </NavLink>
         <NavLink
           to="/phones"
@@ -60,7 +69,7 @@ export const MobileMenu = () => {
             `${styles.link} ${isActive ? styles.active : ''}`
           }
         >
-          Phones
+          {t('phones')}
         </NavLink>
         <NavLink
           to="/tablets"
@@ -68,7 +77,7 @@ export const MobileMenu = () => {
             `${styles.link} ${isActive ? styles.active : ''}`
           }
         >
-          Tablets
+          {t('tablets')}
         </NavLink>
         <NavLink
           to="/accessories"
@@ -76,18 +85,55 @@ export const MobileMenu = () => {
             `${styles.link} ${isActive ? styles.active : ''}`
           }
         >
-          Accessories
+          {t('accessories')}
         </NavLink>
       </nav>
+      <div className={styles.languageThemeButtons}>
+        <div className={styles.languageSwitcher}>
+          <button
+            type="button"
+            className={`${styles.languageButton} ${
+              language === 'en' ? styles.selected : ''
+            }`}
+            onClick={() => setLanguage('en')}
+          >
+            EN
+          </button>
+
+          <button
+            type="button"
+            className={`${styles.languageButton} ${
+              language === 'ua' ? styles.selected : ''
+            }`}
+            onClick={() => setLanguage('ua')}
+          >
+            UA
+          </button>
+        </div>
+
+        <button
+          type="button"
+          className={`${styles.themeSwitcher} ${
+            theme === 'dark' ? styles.dark : ''
+          }`}
+          onClick={toggleTheme}
+          aria-label={
+            theme === 'light' ? t('switchToDarkTheme') : t('switchToLightTheme')
+          }
+        >
+          <span className={styles.themeCircle} />
+        </button>
+      </div>
+
       <div className={styles.actions}>
         <NavLink
-          to="/favourites"
+          to="/favorites"
           className={({ isActive }) =>
             `${styles.icon} ${isActive ? styles.active : ''}`
           }
         >
           <span className={styles.sectionIcon}>
-            <img src={heart} alt="Favourites" />
+            <img src={theme === 'dark' ? heartWhite : heart} alt="Favourites" />
             {favourites.length > 0 && (
               <span className={styles.counter}>{favourites.length}</span>
             )}
@@ -100,7 +146,7 @@ export const MobileMenu = () => {
           }
         >
           <span className={styles.sectionIcon}>
-            <img src={cart} alt="Cart" />
+            <img src={theme === 'dark' ? cartWhite : cart} alt="Cart" />
             {totalCartItems > 0 && (
               <span className={styles.counter}>{totalCartItems}</span>
             )}

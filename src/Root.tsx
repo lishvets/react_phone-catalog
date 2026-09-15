@@ -24,7 +24,7 @@ export const Root = () => (
 
         <Route path="contacts" element={<ContactsPage />} />
         <Route path="rights" element={<RightsPage />} />
-        <Route path="favourites" element={<Favourites />} />
+        <Route path="favorites" element={<Favourites />} />
         <Route path="cart" element={<Cart />} />
       </Route>
       <Route path="/menu" element={<MobileMenu />} />

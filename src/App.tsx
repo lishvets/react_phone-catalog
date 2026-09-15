@@ -5,10 +5,15 @@ import { Footer } from './components/Footer';
 
 export const App = () => {
   return (
-    <>
+    <div className="app">
       <Header />
-      <Outlet />
-      <Footer />
-    </>
+      <div className="app__content">
+        <Outlet />
+      </div>
+
+      <div className="app__footer">
+        <Footer />
+      </div>
+    </div>
   );
 };

@@ -7,6 +7,9 @@ import { getProducts } from '../../api/api';
 import { Product } from '../../types/Product';
 import { ProductCard } from '../ProductCard/ProductCard';
 import { FavouritesContext } from '../context/FavouritesContext';
+import { useLanguage } from '../context/LanguageContext';
+import emptyFavorite from '../../assets/images/product-not-found.png';
+import { useNavigate } from 'react-router-dom';
 
 export const Favourites = () => {
   const context = useContext(FavouritesContext);
@@ -17,6 +20,7 @@ export const Favourites = () => {
 
   const { favourites } = context;
   const [products, setProducts] = useState<Product[]>([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -32,6 +36,8 @@ export const Favourites = () => {
     fetchProducts();
   }, [favourites]);
 
+  const { t } = useLanguage();
+
   return (
     <div className={styles.favourites}>
       <div className={styles.breadcrumbs}>
@@ -39,16 +45,28 @@ export const Favourites = () => {
           <img src={home} alt="Home" />
         </NavLink>
         <img src={arrowRight} alt="" className={styles.arrow} />
-        <span className={styles.current}>Favourites</span>
+        <span className={styles.current}>{t('Favourites')}</span>
       </div>
 
-      <h1 className={styles.title}>Favourites</h1>
+      <h1 className={styles.title}>{t('Favourites')}</h1>
       <p className={styles.subtitle}>
-        {products.length} {products.length === 1 ? 'item' : 'items'}
+        {products.length} {products.length === 1 ? t('item') : t('items')}
       </p>
 
       {favourites.length === 0 ? (
-        <h2>Your favourites are empty</h2>
+        <div className={styles.emptyFavorite}>
+          <img src={emptyFavorite} alt="" className={styles.emptyImage} />
+
+          <h2 className={styles.title}>{t('YourFavourites')}</h2>
+          <p className={styles.emptyText}>{t('EmptyFavoriteText')}</p>
+          <button
+            type="button"
+            className={styles.startShopping}
+            onClick={() => navigate('/')}
+          >
+            {t('StartShopping')}
+          </button>
+        </div>
       ) : (
         <div className={styles.products}>
           {products.map(product => (

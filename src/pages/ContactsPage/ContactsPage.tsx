@@ -1,12 +1,15 @@
 import styles from './ContactsPage.module.scss';
+import { useLanguage } from '../../components/context/LanguageContext';
 
 export const ContactsPage = () => {
+  const { t } = useLanguage();
+
   return (
     <div className={styles.contacts}>
-      <h1 className={styles.title}>Contacts</h1>
+      <h1 className={styles.title}>{t('contacts')}</h1>
       <div className={styles.item}>
-        <span className={styles.label}>Author:</span>
-        <span className={styles.value}>Lidiia Shvets</span>
+        <span className={styles.label}>{t('Author')}:</span>
+        <span className={styles.value}>{t('LidiiaShvets')}</span>
       </div>
 
       <div className={styles.item}>
@@ -39,14 +42,14 @@ export const ContactsPage = () => {
         </a>
       </div>
       <div className={styles.item}>
-        <span className={styles.label}>Phone</span>
+        <span className={styles.label}>{t('Phone')}(UA):</span>
         <a href="tel:+380951868467" className={styles.link}>
           +380 95 186 84 67
         </a>
       </div>
 
       <div className={styles.item}>
-        <span className={styles.label}>Phone (ES)</span>
+        <span className={styles.label}>{t('Phone')} (ES):</span>
         <a href="tel:+34613455850" className={styles.link}>
           +34 613 45 58 50
         </a>

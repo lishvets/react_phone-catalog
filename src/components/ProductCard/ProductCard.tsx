@@ -1,10 +1,13 @@
 import React from 'react';
 import heart from '../../assets/icons/heart.svg';
+import heartWhite from '../../assets/icons/heart-white.svg';
 import redHeart from '../../assets/icons/redHeart.svg';
 import styles from './ProductCard.module.scss';
 import { NavLink } from 'react-router-dom';
 import { useFavourite } from '../../hooks/useFavourite';
 import { useCart } from '../../hooks/useCart';
+import { useLanguage } from '../context/LanguageContext';
+import { useTheme } from '../context/ThemeContext';
 
 type ProductCardProps = {
   image: string;
@@ -32,6 +35,8 @@ export const ProductCard: React.FC<ProductCardProps> = ({
   const { isFavourites, handleAddToFavourites } = useFavourite(itemId);
   const { handleAddToCart, isInCart } = useCart();
   const addedToCart = isInCart(itemId);
+  const { t } = useLanguage();
+  const { theme } = useTheme();
 
   return (
     <div className={styles.card}>
@@ -53,13 +58,13 @@ export const ProductCard: React.FC<ProductCardProps> = ({
       <div className={styles.divider}></div>
 
       <div className={styles.features}>
-        <p className={styles.label}>Screen</p>
+        <p className={styles.label}>{t('Screen')}</p>
         <p className={styles.value}>{screen}</p>
 
-        <p className={styles.label}>Capacity</p>
+        <p className={styles.label}>{t('Capacity')}</p>
         <p className={styles.value}>{capacity}</p>
 
-        <p className={styles.label}>RAM</p>
+        <p className={styles.label}>{t('RAM')}</p>
         <p className={styles.value}>{ram}</p>
       </div>
       <div className={styles.buttonContainer}>
@@ -76,7 +81,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
             })
           }
         >
-          {addedToCart ? 'Added to cart' : 'Add to cart'}
+          {addedToCart ? t('AddedToCart') : t('AddToCart')}
         </button>
         <button
           type="button"
@@ -90,7 +95,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
               className={styles.favouriteIcon}
             />
           ) : (
-            <img src={heart} alt="Favourites" />
+            <img src={theme === 'dark' ? heartWhite : heart} alt="Favourites" />
           )}
         </button>
       </div>

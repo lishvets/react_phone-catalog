@@ -1,5 +1,6 @@
 import arrowDown from '../../assets/icons/arrowDown.svg';
 import styles from './ProductFilters.module.scss';
+import { useLanguage } from '../context/LanguageContext';
 
 type Props = {
   sort: string;
@@ -12,35 +13,37 @@ export const ProductFilters: React.FC<Props> = ({
   perPage,
   onParamsChange,
 }) => {
+  const { t } = useLanguage();
+
   return (
     <div className={styles.filters}>
       <div className={styles.filter}>
-        <p className={styles.filterName}>Sort by</p>
+        <p className={styles.filterName}>{t('SortBy')}</p>
         <div className={styles.selectWrapper}>
           <select
             className={styles.select}
             value={sort}
             onChange={e => onParamsChange('sort', e.target.value)}
           >
-            <option value="age">Newest</option>
-            <option value="title">Alphabetically</option>
-            <option value="price">Cheapest</option>
+            <option value="age">{t('Newest')}</option>
+            <option value="title">{t('Alphabetically')}</option>
+            <option value="price">{t('Cheapest')}</option>
           </select>
           <img src={arrowDown} alt="" className={styles.arrow} />
         </div>
       </div>
       <div className={styles.filter}>
-        <p className={styles.filterName}>Items on page</p>
+        <p className={styles.filterName}>{t('ItemsOnPage')}</p>
         <div className={styles.selectWrapper}>
           <select
             className={styles.selectPage}
             value={perPage}
             onChange={e => onParamsChange('perPage', e.target.value)}
           >
-            <option>4</option>
-            <option>8</option>
-            <option>16</option>
-            <option>all</option>
+            <option value="4">4</option>
+            <option value="8">8</option>
+            <option value="16">16</option>
+            <option value="all">{t('all')}</option>
           </select>
           <img src={arrowDown} alt="" className={styles.arrow} />
         </div>

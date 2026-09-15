@@ -15,3 +15,13 @@
   --hover-color: #323542;
   --background-color: #0f1121;
 }
+
+.app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.app__content {
+  flex: 1;
+}

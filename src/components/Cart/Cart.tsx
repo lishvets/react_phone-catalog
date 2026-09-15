@@ -6,6 +6,8 @@ import { CartItem } from '../CartItem/CartItem';
 import { useContext } from 'react';
 import { CartContext } from '../context/CartContext';
 import { saveCartItems } from '../../api/cart';
+import { useLanguage } from '../context/LanguageContext';
+import emtyCart from '../../assets/images/cart-is-empty.png';
 
 export const Cart = () => {
   const navigate = useNavigate();
@@ -38,6 +40,8 @@ export const Cart = () => {
     }
   };
 
+  const { t } = useLanguage();
+
   return (
     <div>
       <div className={styles.carts}>
@@ -49,13 +53,25 @@ export const Cart = () => {
           <span className={styles.icon}>
             <img src={arrowLeft} alt="" className={styles.arrow} />
           </span>
-          <span className={styles.text}>Back</span>
+          <span className={styles.text}>{t('Back')}</span>
         </button>
 
-        <h1 className={styles.title}>Cart</h1>
+        <h1 className={styles.title}>{t('Cart')}</h1>
 
         {cartItems.length === 0 ? (
-          <h2>Your cart is empty</h2>
+          <div className={styles.emptyCart}>
+            <img src={emtyCart} alt="" className={styles.emptyCartImage} />
+
+            <h2 className={styles.emptyCartTitle}>{t('EmptyCart')}</h2>
+            <p className={styles.emptyCartText}>{t('EmptyCartText')}</p>
+            <button
+              type="button"
+              className={styles.startShopping}
+              onClick={() => navigate('/')}
+            >
+              {t('StartShopping')}
+            </button>
+          </div>
         ) : (
           <div className={styles.wrapper}>
             <div className={styles.content}>
@@ -66,7 +82,8 @@ export const Cart = () => {
             <div className={styles.summary}>
               <p className={styles.totalPrice}>${totalPrice}</p>
               <p className={styles.par}>
-                Total for {totalItems} {totalItems === 1 ? 'item' : 'items'}
+                {t('TotalFor')} {totalItems}{' '}
+                {totalItems === 1 ? t('item') : t('items')}
               </p>
               <div className={styles.divider} />
               <button
@@ -74,7 +91,7 @@ export const Cart = () => {
                 className={styles.checkout}
                 onClick={handleCheckout}
               >
-                Checkout
+                {t('Checkout')}
               </button>
             </div>
           </div>
