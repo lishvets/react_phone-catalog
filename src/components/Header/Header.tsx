@@ -63,7 +63,7 @@ export const Header = () => {
     return () => {
       clearTimeout(timer);
     };
-  }, [searchValue, location.pathname, location.search, navigate]);
+  }, [searchValue, location.pathname, navigate]);
 
   useEffect(() => {
     setSearchValue(query);

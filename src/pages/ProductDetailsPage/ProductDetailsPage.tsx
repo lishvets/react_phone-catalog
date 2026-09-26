@@ -342,14 +342,13 @@ export const ProductDetailsPage = () => {
             <p className={styles.value}>{product.cell.join(', ')}</p>
           </div>
         </div>
-      </section>
-      <div className={styles.newModels}>
+
         <ProductsSlider
           title={t('YouMayAlsoLike')}
           type="suggested"
           productId={product.id}
         />
-      </div>
+      </section>
     </>
   );
 };

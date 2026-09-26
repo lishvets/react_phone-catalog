@@ -1,5 +1,6 @@
 import styles from './Cart.module.scss';
 import arrowLeft from '../../assets/icons/arrow-left.svg';
+import arrowLeftWhite from '../../assets/icons/arrow-left-white.svg';
 
 import { useNavigate } from 'react-router-dom';
 import { CartItem } from '../CartItem/CartItem';
@@ -8,6 +9,7 @@ import { CartContext } from '../context/CartContext';
 import { saveCartItems } from '../../api/cart';
 import { useLanguage } from '../context/LanguageContext';
 import emtyCart from '../../assets/images/cart-is-empty.png';
+import { useTheme } from '../context/ThemeContext';
 
 export const Cart = () => {
   const navigate = useNavigate();
@@ -41,6 +43,7 @@ export const Cart = () => {
   };
 
   const { t } = useLanguage();
+  const { theme } = useTheme();
 
   return (
     <div>
@@ -51,7 +54,11 @@ export const Cart = () => {
           onClick={() => navigate(-1)}
         >
           <span className={styles.icon}>
-            <img src={arrowLeft} alt="" className={styles.arrow} />
+            <img
+              src={theme === 'dark' ? arrowLeftWhite : arrowLeft}
+              alt=""
+              className={styles.arrow}
+            />
           </span>
           <span className={styles.text}>{t('Back')}</span>
         </button>

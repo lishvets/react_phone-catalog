@@ -3,7 +3,9 @@
 
 .carts {
   padding:  24px 16px 56px;
-  gap: 16px;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
 
   @include on-tablet {
     padding:  40px 24px 64px;
@@ -15,6 +17,7 @@
 
   @include on-design {
     padding: 40px 152px 80px;
+
   }
 }
 
@@ -22,15 +25,9 @@
   display: flex;
   flex-direction: column;
   gap: 16px;
-  margin-inline: 16px;
-
-  @include on-tablet {
-    margin-inline: 24px;
-  }
 
   @include on-desktop {
     grid-column: 1 / 17;
-     margin-inline: 24px 0;
   }
 }
 
@@ -76,6 +73,7 @@
     @include page-grid;
 
     gap: 16px;
+    justify-content: center;
   }
 }
 
@@ -128,23 +126,21 @@
 }
 
 .emptyCart {
+  flex: 1;
+
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 60px 20px;
   text-align: center;
+  box-sizing: border-box;
 }
 
 .emptyCartImage {
   width: 180px;
   height: 180px;
-   object-fit: contain;
+  object-fit: contain;
   margin-bottom: 24px;
-
-  @include on-tablet {
-    width: 100%;
-  }
 }
 
 .emptyCartTitle {
@@ -175,5 +171,4 @@
   &:hover {
     opacity: 0.8;
   }
-
 }

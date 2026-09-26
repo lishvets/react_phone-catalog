@@ -1,8 +1,11 @@
 import { NavLink, useSearchParams } from 'react-router-dom';
 import styles from './CatalogPage.module.scss';
 import arrowRight from '../../assets/icons/arrow-right.svg';
+import arrowRightWhite from '../../assets/icons/arrow-right-white.svg';
 import arrowLeft from '../../assets/icons/arrow-left.svg';
+import arrowLeftWhite from '../../assets/icons/arrow-left-white.svg';
 import home from '../../assets/icons/home.svg';
+import homeWhite from '../../assets/icons/home-white.svg';
 import { ProductCard } from '../../components/ProductCard/ProductCard';
 import { useEffect, useState } from 'react';
 import { Product } from '../../types/Product';
@@ -14,6 +17,7 @@ import { emptyMessages } from '../../utils/emptyMessages';
 import { searchMessages } from '../../utils/searchMessages';
 import { useLanguage } from '../context/LanguageContext';
 import { translations } from '../../translations/translations';
+import { useTheme } from '../context/ThemeContext';
 
 type Props = {
   title: keyof typeof translations.en;
@@ -22,21 +26,23 @@ type Props = {
 
 export const CatalogPage: React.FC<Props> = ({ title, category }) => {
   const [products, setProducts] = useState<Product[]>([]);
-  const [searchParams, setSearchParams] = useSearchParams();
-  const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
-  const sort = searchParams.get('sort') || 'age';
+  const [isLoading, setIsLoading] = useState(true);
+
+  const [searchParams, setSearchParams] = useSearchParams();
   const perPage = searchParams.get('perPage') || 'all';
-  const page = Number(searchParams.get('page')) || 1;
+  const sort = searchParams.get('sort') || 'age';
   const query = searchParams.get('query') || '';
+  const page = Number(searchParams.get('page') || 1);
 
   const { t } = useLanguage();
+  const { theme } = useTheme();
 
   const loadProducts = () => {
     setIsLoading(true);
     setIsError(false);
     getProducts()
-      .then(setProducts)
+      .then(data => setProducts(data))
       .catch(() => setIsError(true))
       .finally(() => setIsLoading(false));
   };
@@ -50,15 +56,14 @@ export const CatalogPage: React.FC<Props> = ({ title, category }) => {
   );
 
   const getSortedProducts = () => {
-    const visibleProducts = [...categoryProducts];
+    const sortedProducts = [...categoryProducts];
 
-    visibleProducts.sort((a, b) => {
+    sortedProducts.sort((a, b) => {
       switch (sort) {
         case 'age':
           return b.year - a.year;
         case 'title':
           return a.name.localeCompare(b.name);
-
         case 'price':
           return a.price - b.price;
 
@@ -67,26 +72,13 @@ export const CatalogPage: React.FC<Props> = ({ title, category }) => {
       }
     });
 
-    return visibleProducts;
+    return sortedProducts;
   };
 
   const sortedProducts = getSortedProducts();
   const filteredProducts = sortedProducts.filter(product => {
     return product.name.toLowerCase().includes(query.toLowerCase());
   });
-
-  const itemsPerPage =
-    perPage === 'all' ? filteredProducts.length : Number(perPage);
-  const totalPages =
-    perPage === 'all' ? 1 : Math.ceil(filteredProducts.length / itemsPerPage);
-
-  const startIndex = (page - 1) * itemsPerPage;
-  const endIndex = Math.min(page * itemsPerPage, filteredProducts.length);
-
-  const visibleProducts =
-    perPage === 'all'
-      ? filteredProducts
-      : filteredProducts.slice(startIndex, endIndex);
 
   const handleParamsChange = (name: string, value: string) => {
     const newParams = new URLSearchParams(searchParams);
@@ -97,32 +89,48 @@ export const CatalogPage: React.FC<Props> = ({ title, category }) => {
       newParams.delete('sort');
     } else if (name === 'query' && value === '') {
       newParams.delete('query');
-    } else if (value === '1' && name === 'page') {
-      newParams.delete('page');
     } else {
       newParams.set(name, value);
     }
 
-    if (name !== 'page') {
-      newParams.delete('page');
-    }
+    newParams.delete('page');
 
     setSearchParams(newParams);
   };
 
-  function handlePrevPage() {
-    if (page > 1) {
-      const newPage = page - 1;
+  //pagination
+  const itemsPerPage =
+    perPage === 'all' ? filteredProducts.length : Number(perPage);
 
-      handleParamsChange('page', newPage.toString());
+  const totalPages =
+    perPage === 'all' ? 1 : Math.ceil(filteredProducts.length / itemsPerPage);
+
+  const startIndex = (page - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+
+  const visibleProducts = filteredProducts.slice(startIndex, endIndex);
+
+  const handlePageChange = (newPage: number) => {
+    const params = new URLSearchParams(searchParams);
+
+    if (newPage === 1) {
+      params.delete('page');
+    } else {
+      params.set('page', newPage.toString());
     }
-  }
+
+    setSearchParams(params);
+  };
+
+  const handlePrevPage = () => {
+    if (page > 1) {
+      handlePageChange(page - 1);
+    }
+  };
 
   const handleNextPage = () => {
     if (page < totalPages) {
-      const newPage = page + 1;
-
-      handleParamsChange('page', newPage.toString());
+      handlePageChange(page + 1);
     }
   };
 
@@ -170,11 +178,16 @@ export const CatalogPage: React.FC<Props> = ({ title, category }) => {
     <section className={styles.products}>
       <div className={styles.breadcrumbs}>
         <NavLink to="/" className={styles.home}>
-          <img src={home} alt="Home" />
+          <img src={theme === 'dark' ? homeWhite : home} alt="Home" />
         </NavLink>
-        <img src={arrowRight} alt="" className={styles.arrow} />
+        <img
+          src={theme === 'dark' ? arrowRightWhite : arrowRight}
+          alt=""
+          className={styles.arrow}
+        />
         <span className={styles.current}>{t(category)}</span>
       </div>
+
       <div className={styles.pageInfo}>
         <h1 className={styles.title}>{t(title)}</h1>
         <p className={styles.count}>
@@ -188,7 +201,7 @@ export const CatalogPage: React.FC<Props> = ({ title, category }) => {
         onParamsChange={handleParamsChange}
       />
 
-      <div className={styles.productsGrid}>
+      <div key={page} className={styles.productsGrid}>
         {visibleProducts.map(product => (
           <ProductCard key={product.id} {...product} showFullPrice={false} />
         ))}
@@ -199,10 +212,10 @@ export const CatalogPage: React.FC<Props> = ({ title, category }) => {
           <button
             type="button"
             disabled={page === 1}
-            onClick={handlePrevPage}
             className={styles.button}
+            onClick={handlePrevPage}
           >
-            <img src={arrowLeft} alt="" />
+            <img src={theme === 'dark' ? arrowLeftWhite : arrowLeft} alt="" />
           </button>
           <ul className={styles.pageButtons}>
             {Array.from(
@@ -215,9 +228,7 @@ export const CatalogPage: React.FC<Props> = ({ title, category }) => {
                   className={
                     page === pageNumber ? styles.active : styles.pageButton
                   }
-                  onClick={() =>
-                    handleParamsChange('page', pageNumber.toString())
-                  }
+                  onClick={() => handlePageChange(pageNumber)}
                 >
                   {pageNumber}
                 </button>
@@ -230,7 +241,7 @@ export const CatalogPage: React.FC<Props> = ({ title, category }) => {
             disabled={page === totalPages}
             onClick={handleNextPage}
           >
-            <img src={arrowRight} alt="" />
+            <img src={theme === 'dark' ? arrowRightWhite : arrowRight} alt="" />
           </button>
         </div>
       )}

@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import arrowLeft from '../../assets/icons/arrow-left.svg';
+import arrowLeftWhite from '../../assets/icons/arrow-left-white.svg';
 import arrowRight from '../../assets/icons/arrow-right.svg';
+import arrowRightWhite from '../../assets/icons/arrow-right-white.svg';
 import styles from './PicturesSlider.module.scss';
 import slide from '../../assets/images/slider1.png';
 import slide1 from '../../assets/images/slider1-tab.png';
@@ -10,6 +12,7 @@ import classNames from 'classnames';
 import { NavLink } from 'react-router-dom';
 import { useLanguage } from '../context/LanguageContext';
 import { translations } from '../../translations/translations';
+import { useTheme } from '../context/ThemeContext';
 
 type Slide = {
   mobile: string;
@@ -79,6 +82,7 @@ export const PicturesSlider = () => {
   }, [currentSlide]);
 
   const { t } = useLanguage();
+  const { theme } = useTheme();
 
   return (
     <section className={styles.slider}>
@@ -90,7 +94,10 @@ export const PicturesSlider = () => {
           className={styles.button}
           onClick={handlePrevSlide}
         >
-          <img src={arrowLeft} alt="Previous" />
+          <img
+            src={theme === 'dark' ? arrowLeftWhite : arrowLeft}
+            alt="Previous"
+          />
         </button>
         <div className={styles.imageContainer}>
           <div className={styles.slide}>
@@ -130,7 +137,10 @@ export const PicturesSlider = () => {
           className={styles.button}
           onClick={handleNextSlide}
         >
-          <img src={arrowRight} alt="Next" />
+          <img
+            src={theme === 'dark' ? arrowRightWhite : arrowRight}
+            alt="Next"
+          />
         </button>
       </div>
       <div className={styles.pagination}>

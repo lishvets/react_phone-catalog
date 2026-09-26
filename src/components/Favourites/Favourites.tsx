@@ -1,6 +1,8 @@
 import styles from './Favourites.module.scss';
 import home from '../../assets/icons/home.svg';
+import homeWhite from '../../assets/icons/home-white.svg';
 import arrowRight from '../../assets/icons/arrow-right.svg';
+import arrowRightWhite from '../../assets/icons/arrow-right-white.svg';
 import { NavLink } from 'react-router-dom';
 import { useContext, useEffect, useState } from 'react';
 import { getProducts } from '../../api/api';
@@ -10,6 +12,7 @@ import { FavouritesContext } from '../context/FavouritesContext';
 import { useLanguage } from '../context/LanguageContext';
 import emptyFavorite from '../../assets/images/product-not-found.png';
 import { useNavigate } from 'react-router-dom';
+import { useTheme } from '../context/ThemeContext';
 
 export const Favourites = () => {
   const context = useContext(FavouritesContext);
@@ -37,27 +40,35 @@ export const Favourites = () => {
   }, [favourites]);
 
   const { t } = useLanguage();
+  const { theme } = useTheme();
 
   return (
     <div className={styles.favourites}>
       <div className={styles.breadcrumbs}>
         <NavLink to="/" className={styles.home}>
-          <img src={home} alt="Home" />
+          <img src={theme === 'dark' ? homeWhite : home} alt="Home" />
         </NavLink>
-        <img src={arrowRight} alt="" className={styles.arrow} />
+        <img
+          src={theme === 'dark' ? arrowRightWhite : arrowRight}
+          alt=""
+          className={styles.arrow}
+        />
         <span className={styles.current}>{t('Favourites')}</span>
       </div>
 
       <h1 className={styles.title}>{t('Favourites')}</h1>
-      <p className={styles.subtitle}>
-        {products.length} {products.length === 1 ? t('item') : t('items')}
-      </p>
+
+      {products.length > 0 && (
+        <p className={styles.subtitle}>
+          {products.length} {products.length === 1 ? t('item') : t('items')}
+        </p>
+      )}
 
       {favourites.length === 0 ? (
         <div className={styles.emptyFavorite}>
           <img src={emptyFavorite} alt="" className={styles.emptyImage} />
 
-          <h2 className={styles.title}>{t('YourFavourites')}</h2>
+          <h2 className={styles.emptyTitle}>{t('YourFavourites')}</h2>
           <p className={styles.emptyText}>{t('EmptyFavoriteText')}</p>
           <button
             type="button"

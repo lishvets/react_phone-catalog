@@ -46,15 +46,18 @@
   display: none;
 
   @include on-tablet {
-    display: block;
-    background-color: $white-color;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--button-background);
     cursor: pointer;
     width: 32px;
     height: 189px;
-    border: 1px solid $secondary-color;
+    border: 1px solid var(--primary-color);
+    transition: border-color 0.3s;
 
     &:hover {
-      border-color: $primary-color;
+      border-color: var(--primary-color);
     }
   }
 
@@ -137,12 +140,12 @@
 .dot {
   width: 14px;
   height: 4px;
-  background-color: $grey-color;
+  background-color: var(--icons-color);
   border: none;
 }
 
 .active {
-  background-color: $primary-color;
+  background-color: var(--primary-color);
 }
 
 .slideTitle {

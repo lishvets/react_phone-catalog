@@ -16,13 +16,15 @@
     @include page-grid;
 
     column-gap: 16px;
+    justify-content: center;
   }
 
   @include on-design {
     padding: 24px 152px 80px;
     width: 100%;
-    max-width: 1300px;
+    max-width: 1440px;
     box-sizing: border-box;
+    margin-inline: auto;
   }
 }
 
@@ -111,6 +113,7 @@
     grid-column: 1/-1;
     grid-template-columns: 80px 512px 1fr;
     position: relative;
+    justify-content: center;
   }
 }
 
@@ -182,6 +185,7 @@
   padding: 0;
   border: none;
   background: transparent;
+  cursor: pointer;
 }
 
 .thumbnailButton img {
@@ -549,8 +553,7 @@
 
 .newModels {
   margin: 0;
-   padding: 0 0 56px 16px;
-
+  padding: 0 0 56px 16px;
 
   @include on-tablet {
     padding: 0 0 64px 24px;
